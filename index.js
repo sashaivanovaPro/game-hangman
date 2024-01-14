@@ -8,6 +8,8 @@ const description = hangmanWords[1].description;
 
 const number = 0;
 
+const guessWord = hangmanWords[1].word.split("");
+
 const bodyWrapper = document.createElement("div");
 bodyWrapper.classList.add("body-wrapper");
 
@@ -69,8 +71,17 @@ game.classList.add("game");
 const gameWrapper = document.createElement("div");
 gameWrapper.classList.add("game-wrapper");
 
+//Create a guess word section
+
 const word = document.createElement("div");
 word.classList.add("word");
+
+guessWord.forEach((symbol) => {
+  const cell = document.createElement("div");
+  cell.classList.add("word__cell");
+  cell.textContent = `${symbol.toUpperCase()}`;
+  word.append(cell);
+});
 
 const hint = document.createElement("p");
 hint.classList.add("hint");

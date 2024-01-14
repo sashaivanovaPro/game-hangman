@@ -98,7 +98,7 @@ button:active {
   padding: 10rem 10rem 0;
   margin: 0 auto;
   display: flex;
-  gap: 10rem;
+  gap: 15rem;
 }
 
 .gallow-image {
@@ -111,6 +111,31 @@ button:active {
   position: absolute;
   bottom: 7.5rem;
   right: 5.5rem;
+}
+
+.game {
+  padding-top: 10rem;
+}
+
+.word {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 6rem;
+}
+
+.word__cell {
+  font-size: 5rem;
+  width: 6rem;
+  height: 6rem;
+  margin: 0.5rem;
+  font-family: "Inter", Verdana, sans-serif;
+  border-radius: 1rem;
+}
+
+.progress,
+.hint {
+  margin-bottom: 4rem;
 }
 
 .keyboard {
