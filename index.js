@@ -34,6 +34,9 @@ const manHead = document.createElement("img");
 manHead.classList.add("head-png");
 manHead.src = "./images/head.png";
 
+const middlePart = document.createElement("div");
+middlePart.classList.add("middle-part");
+
 const manBody = document.createElement("img");
 manBody.classList.add("body-png");
 manBody.src = "./images/body.png";
@@ -45,6 +48,9 @@ leftHand.src = "./images/hand-one.png";
 const rightHand = document.createElement("img");
 rightHand.classList.add("right-hand-png");
 rightHand.src = "./images/hand-two.png";
+
+const legs = document.createElement("div");
+legs.classList.add("legs");
 
 const leftLeg = document.createElement("img");
 leftLeg.classList.add("left-leg-png");
@@ -78,9 +84,11 @@ keyboard.classList.add("keyboard");
 
 document.body.append(bodyWrapper);
 bodyWrapper.append(gallows, game);
-gallows.append(gallowImage, hangman, gameName);
-gallowImage.append(gallowPng);
+gallows.append(gallowImage, gameName);
+gallowImage.append(gallowPng, hangman);
 
-hangman.append(manHead, manBody, leftHand, rightHand, leftLeg, rightLeg);
+hangman.append(manHead, middlePart, legs);
+middlePart.append(leftHand, manBody, rightHand);
+legs.append(leftLeg, rightLeg);
 game.append(gameWrapper);
 gameWrapper.append(word, hint, progress, keyboard);

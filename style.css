@@ -1,3 +1,9 @@
+@font-face {
+  font-family: "Inter";
+  src: url(../fonts/Inter.var.woff2);
+  font-weight: 100 900;
+}
+
 html {
   font-size: 62.5%;
   box-sizing: border-box;
@@ -42,17 +48,20 @@ body {
   background-color: #e8e8e8;
 }
 
-h1,
-h2,
-h3 {
-  font-weight: var(--bold-weight);
-}
-
 h1 {
-  font-size: 3.4rem;
-  line-height: 6rem;
+  font-size: 5rem;
+  line-height: 10rem;
   color: #1f1f1f;
   font-weight: bold;
+  margin: 4rem 0;
+}
+
+p {
+  font-size: 2.4rem;
+  line-height: 4rem;
+  color: #1f1f1f;
+  font-weight: bold;
+  margin: 2rem 0;
 }
 
 a {
@@ -70,8 +79,22 @@ button {
   background-color: #283866;
 }
 
-.body {
+.body-wrapper {
   max-width: 144rem;
-  padding: 0 200;
+  padding: 10rem 10rem 0;
   margin: 0 auto;
+  display: flex;
+  gap: 10rem;
+}
+
+.gallow-image {
+  position: relative;
+}
+
+.hangman {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  bottom: 7.5rem;
+  right: 5.5rem;
 }
