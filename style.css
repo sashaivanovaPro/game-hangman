@@ -49,27 +49,12 @@ h3 {
 }
 
 h1 {
-  font-size: 2.4rem;
-  line-height: 2.6rem;
+  font-size: 3.4rem;
+  line-height: 6rem;
   color: #1f1f1f;
+  font-weight: bold;
 }
 
-h2 {
-  font-size: var(--h2-size);
-  line-height: var(--h2-line-height);
-}
-
-h3 {
-  font-size: var(--h3-size);
-  line-height: var(--h2-line-height);
-}
-
-.span {
-  color: var(--text-color-accent);
-  font-style: italic;
-  font-variation-settings: "slnt" 0;
-  font-feature-settings: "clig" 0, "liga" 0;
-}
 a {
   text-decoration: none;
   color: #1f1f1f;
