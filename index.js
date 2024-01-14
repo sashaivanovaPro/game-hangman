@@ -1,5 +1,6 @@
 console.log("Hello hangman!");
-import { hangmanWords } from "./hangman.js";
+import { hangmanWords } from "./modules/hangman.js";
+import { keyboardArr } from "./modules/keyboard.js";
 
 // Creating main HTML structure
 
@@ -79,8 +80,17 @@ const progress = document.createElement("p");
 progress.classList.add("progress");
 progress.textContent = `Incorrect guess: ${number}/6`;
 
+// Create a virtual keyboard
+
 const keyboard = document.createElement("div");
 keyboard.classList.add("keyboard");
+
+keyboardArr.forEach((letter) => {
+  let button = document.createElement("button");
+  button.classList.add("keyboard__button");
+  button.textContent = `${letter.toLocaleUpperCase()}`;
+  keyboard.append(button);
+});
 
 document.body.append(bodyWrapper);
 bodyWrapper.append(gallows, game);
