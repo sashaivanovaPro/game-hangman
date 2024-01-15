@@ -98,11 +98,12 @@ button:active {
   padding: 10rem 10rem 0;
   margin: 0 auto;
   display: flex;
-  gap: 15rem;
+  gap: 10rem;
 }
 
 .gallow-image {
   position: relative;
+  min-width: 43.2rem;
 }
 
 .hangman {

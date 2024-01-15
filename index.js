@@ -4,11 +4,11 @@ import { keyboardArr } from "./modules/keyboard.js";
 
 // Creating main HTML structure
 
-const description = hangmanWords[1].description;
+const description = hangmanWords[0].description;
 
 const number = 0;
 
-const guessWord = hangmanWords[1].word.split("");
+const guessWord = hangmanWords[0].word.split("");
 
 const bodyWrapper = document.createElement("div");
 bodyWrapper.classList.add("body-wrapper");
@@ -17,6 +17,9 @@ bodyWrapper.classList.add("body-wrapper");
 
 const gallows = document.createElement("section");
 gallows.classList.add("gallows");
+
+const gallowImgWrapper = document.createElement("div");
+gallowImgWrapper.classList.add("gallow-img__wrapper");
 
 const gallowImage = document.createElement("div");
 gallowImage.classList.add("gallow-image");
@@ -105,7 +108,8 @@ keyboardArr.forEach((letter) => {
 
 document.body.append(bodyWrapper);
 bodyWrapper.append(gallows, game);
-gallows.append(gallowImage, gameName);
+gallows.append(gallowImgWrapper, gameName);
+gallowImgWrapper.append(gallowImage);
 gallowImage.append(gallowPng, hangman);
 
 hangman.append(manHead, middlePart, legs);
