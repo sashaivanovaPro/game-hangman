@@ -1,46 +1,25 @@
 import { hangmanWords } from "./modules/hangman.js";
 import { keyboardArr } from "./modules/keyboard.js";
 
-window.onload = () => {
-  const wordNumber = getRandomWord(0, hangmanWords.length);
-  const description = hangmanWords[wordNumber].description;
-
-  const number = 0;
-
-  const progress = document.createElement("p");
-  progress.classList.add("progress");
-  progress.textContent = `Incorrect guess: ${number}/6`;
-
-  const guessWord = hangmanWords[wordNumber].word.split("");
-  guessWord.forEach((symbol) => {
-    const cell = document.createElement("div");
-    cell.classList.add("word__cell");
-    cell.textContent = `${symbol.toUpperCase()}`;
-    word.append(cell);
-  });
-
-  const hint = document.createElement("p");
-  hint.classList.add("hint");
-  hint.textContent = `Hint: ${description}`;
-
-  gameWrapper.append(hint, progress);
-  console.log(hangmanWords[wordNumber].word);
-};
-
 // Choose a guess word randomly from 0 to Words Array lenght - 1
 
-function getRandomWord(min, max) {
+const getRandomWord = (min, max) => {
   min = Math.ceil(min);
   max = Math.floor(max);
   let wordNumber = Math.floor(Math.random() * (max - min) + min);
   return wordNumber;
-}
+};
 
-// const description = hangmanWords[wordNumber].description;
+let number = 0;
+let wordNumber = getRandomWord(0, hangmanWords.length);
+const description = hangmanWords[wordNumber].description;
+let guessWord = hangmanWords[wordNumber].word.toUpperCase().split("");
+console.log(guessWord);
 
-// const number = 0;
-
-// const guessWord = hangmanWords[wordNumber].word.split("");
+window.onload = () => {
+  console.log(hangmanWords[wordNumber].word);
+  wordRender("_");
+};
 
 // Creating main HTML structure
 
@@ -120,20 +99,29 @@ gameWrapper.classList.add("game-wrapper");
 const word = document.createElement("div");
 word.classList.add("word");
 
-// guessWord.forEach((symbol) => {
-//   const cell = document.createElement("div");
-//   cell.classList.add("word__cell");
-//   cell.textContent = `${symbol.toUpperCase()}`;
-//   word.append(cell);
-// });
+const hint = document.createElement("p");
+hint.classList.add("hint");
+hint.textContent = `Hint: ${description}`;
 
-// const hint = document.createElement("p");
-// hint.classList.add("hint");
-// hint.textContent = `Hint: ${description}`;
+const progress = document.createElement("p");
+progress.classList.add("progress");
+progress.textContent = `Incorrect guess: ${number}/6`;
 
-// const progress = document.createElement("p");
-// progress.classList.add("progress");
-// progress.textContent = `Incorrect guess: ${number}/6`;
+const wordRender = (arg) => {
+  guessWord.forEach((symbol) => {
+    const cell = document.createElement("div");
+    cell.classList.add("word__cell");
+    cell.textContent = arg;
+    // cell.textContent = `${symbol.toUpperCase()}`;
+    word.append(cell);
+  });
+};
+
+const letterRerender = (clickedLetter, arr) => {
+  for (let i = 0; i < arr.length; i++) {
+    word.childNodes[arr[i]].textContent = `${clickedLetter}`;
+  }
+};
 
 // Create a virtual keyboard
 
@@ -147,6 +135,49 @@ keyboardArr.forEach((letter) => {
   keyboard.append(button);
 });
 
+const keyboardButtons = keyboard.querySelectorAll(".keyboard__button");
+
+// When we click a button
+
+keyboardButtons.forEach((button) => {
+  button.addEventListener("click", () => {
+    if (button) {
+      lighter(button);
+    } else {
+      number += 1;
+      progress.textContent = `Incorrect guess: ${number}/6`;
+    }
+  });
+});
+
+// Change color of clicked button
+
+const lighter = (button) => {
+  button.classList.add("lighter");
+};
+
+// Check letter in a word
+
+const checkLetter = (event) => {
+  const buttonText = event.target.textContent;
+  console.log(buttonText);
+  console.log(guessWord.includes(buttonText));
+  // return guessWord.includes(buttonText);
+  const indexes = [];
+  for (let i = 0; i < guessWord.length; i++) {
+    if (guessWord[i] === buttonText) {
+      indexes.push(i);
+    }
+  }
+  console.log(indexes);
+
+  letterRerender(buttonText, indexes);
+};
+
+keyboardButtons.forEach((button) => {
+  button.addEventListener("click", checkLetter);
+});
+
 document.body.append(bodyWrapper);
 bodyWrapper.append(gallows, game);
 gallows.append(gallowImgWrapper, gameName);
@@ -157,4 +188,4 @@ hangman.append(manHead, middlePart, legs);
 middlePart.append(leftHand, manBody, rightHand);
 legs.append(leftLeg, rightLeg);
 game.append(gameWrapper);
-gameWrapper.append(word, keyboard);
+gameWrapper.append(word, hint, progress, keyboard);

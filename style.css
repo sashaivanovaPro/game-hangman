@@ -154,3 +154,7 @@ button:active {
 .visible {
   display: block;
 }
+
+.lighter {
+  background-color: #878787;
+}
