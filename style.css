@@ -59,14 +59,14 @@ h2 {
   font-size: 4rem;
   line-height: 8rem;
   font-weight: bold;
-  margin: 3rem 0;
+  margin: 2rem 0;
 }
 
 h3 {
   font-size: 3.5rem;
   line-height: 7rem;
   font-weight: bold;
-  margin: 3rem 0;
+  margin: 2rem 0;
 }
 
 p {
@@ -161,11 +161,11 @@ button:active {
 }
 
 .invisible {
-  display: none;
+  opacity: 0;
 }
 
 .visible {
-  display: block;
+  opacity: 1;
 }
 
 .lighter {
@@ -187,11 +187,12 @@ button:active {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  background-color: rgba(232, 232, 232, 0.9);
+  background-color: rgba(232, 232, 232, 0.8);
   margin: 10% auto;
-  padding: 40px;
+  padding: 30px;
   border: 1px solid #888;
-  width: 40%;
+  width: 30%;
+  border-radius: 5rem;
 }
 
 .modal__button {

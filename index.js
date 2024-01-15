@@ -10,7 +10,8 @@ const getRandomWord = (min, max) => {
   return wordNumber;
 };
 
-let number = 0;
+let number = 0; // quantity of not guessed letters
+let length = 0; //quantity of correctly guessed letters
 let wordNumber = getRandomWord(0, hangmanWords.length);
 const description = hangmanWords[wordNumber].description;
 let correctWord = hangmanWords[wordNumber].word;
@@ -18,7 +19,7 @@ let guessWord = correctWord.toUpperCase().split("");
 console.log(guessWord);
 
 window.onload = () => {
-  console.log(hangmanWords[wordNumber].word);
+  console.log(correctWord);
   initialState();
   wordRender("_");
 };
@@ -64,7 +65,6 @@ manHead.classList.add("invisible");
 
 const middlePart = document.createElement("div");
 middlePart.classList.add("middle-part");
-middlePart.classList.add("invisible");
 
 const manBody = document.createElement("img");
 manBody.classList.add("body-png");
@@ -169,6 +169,7 @@ const checkLetter = (event) => {
   const buttonText = event.target.textContent;
   console.log(buttonText);
   let check = guessWord.includes(buttonText);
+
   // return guessWord.includes(buttonText);
   const indexes = [];
   for (let i = 0; i < guessWord.length; i++) {
@@ -177,15 +178,37 @@ const checkLetter = (event) => {
     }
   }
   if (check) {
+    length += 1;
+    console.log(length);
     letterRerender(buttonText, indexes);
+    winner(length);
   } else {
     number += 1;
     progress.textContent = `Incorrect guess: ${number}/6`;
+    renderHangman(number);
     gameOver(number);
   }
 };
 
-// Rendering a Gallows
+// Rendering a Hangman
+
+const renderHangman = (number) => {
+  if (!number) {
+    return;
+  } else if (number === 1) {
+    manHead.classList.add("visible");
+  } else if (number === 2) {
+    manBody.classList.add("visible");
+  } else if (number === 3) {
+    rightHand.classList.add("visible");
+  } else if (number === 4) {
+    leftHand.classList.add("visible");
+  } else if (number === 5) {
+    rightLeg.classList.add("visible");
+  } else if (number === 6) {
+    leftLeg.classList.add("visible");
+  }
+};
 
 // Create Modal Window
 
@@ -220,16 +243,23 @@ const gameOver = (number) => {
   if (number < 6) {
     return;
   } else {
-    console.log("Looser");
-    createModalWindow("Looser", correctWord);
+    // console.log("Looser");
+    setTimeout(createModalWindow("Looser", correctWord), 8000);
   }
 };
 
 // Check if you win
 
-const winner = () => {
-  createModalWindow("Winer", correctWord);
+const winner = (length) => {
+  if (correctWord.length !== length) {
+    return;
+  } else {
+    // console.log("Looser");
+    setTimeout(createModalWindow("Winer", correctWord), 8000);
+  }
 };
+
+// Event on Click that start letter search
 
 keyboardButtons.forEach((button) => {
   button.addEventListener("click", checkLetter);
