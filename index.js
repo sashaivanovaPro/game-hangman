@@ -144,19 +144,6 @@ keyboardArr.forEach((letter) => {
 
 const keyboardButtons = keyboard.querySelectorAll(".keyboard__button");
 
-// When we click a button
-
-keyboardButtons.forEach((button) => {
-  button.addEventListener("click", () => {
-    if (button) {
-      lighter(button);
-    } else {
-      number += 1;
-      progress.textContent = `Incorrect guess: ${number}/6`;
-    }
-  });
-});
-
 // Change color of clicked button
 
 const lighter = (button) => {
@@ -167,6 +154,10 @@ const lighter = (button) => {
 
 const checkLetter = (event) => {
   const buttonText = event.target.textContent;
+  if (event.target.classList.contains("lighter")) {
+    return;
+  }
+  lighter(event.target);
   console.log(buttonText);
   let check = guessWord.includes(buttonText);
 
@@ -244,7 +235,7 @@ const gameOver = (number) => {
     return;
   } else {
     // console.log("Looser");
-    setTimeout(createModalWindow("Looser", correctWord), 8000);
+    createModalWindow("Looser", correctWord);
   }
 };
 
@@ -255,9 +246,17 @@ const winner = (length) => {
     return;
   } else {
     // console.log("Looser");
-    setTimeout(createModalWindow("Winer", correctWord), 8000);
+    createModalWindow("Winner", correctWord);
   }
 };
+
+// When we click a button
+
+// keyboardButtons.forEach((button) => {
+//   button.addEventListener("click", () => {
+
+//   });
+// });
 
 // Event on Click that start letter search
 
