@@ -39,21 +39,26 @@ hangman.classList.add("hangman");
 const manHead = document.createElement("img");
 manHead.classList.add("head-png");
 manHead.src = "./images/head.png";
+manHead.classList.add("invisible");
 
 const middlePart = document.createElement("div");
 middlePart.classList.add("middle-part");
+middlePart.classList.add("invisible");
 
 const manBody = document.createElement("img");
 manBody.classList.add("body-png");
 manBody.src = "./images/body.png";
+manBody.classList.add("invisible");
 
 const leftHand = document.createElement("img");
 leftHand.classList.add("left-hand-png");
 leftHand.src = "./images/hand-one.png";
+leftHand.classList.add("invisible");
 
 const rightHand = document.createElement("img");
 rightHand.classList.add("right-hand-png");
 rightHand.src = "./images/hand-two.png";
+rightHand.classList.add("invisible");
 
 const legs = document.createElement("div");
 legs.classList.add("legs");
@@ -61,10 +66,12 @@ legs.classList.add("legs");
 const leftLeg = document.createElement("img");
 leftLeg.classList.add("left-leg-png");
 leftLeg.src = "./images/leg-one.png";
+leftLeg.classList.add("invisible");
 
 const rightLeg = document.createElement("img");
 rightLeg.classList.add("right-leg-png");
 rightLeg.src = "./images/leg-two.png";
+rightLeg.classList.add("invisible");
 
 // Game section
 

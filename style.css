@@ -146,3 +146,11 @@ button:active {
   justify-content: center;
   align-items: center;
 }
+
+.invisible {
+  display: none;
+}
+
+.visible {
+  display: block;
+}
