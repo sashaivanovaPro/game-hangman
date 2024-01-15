@@ -13,12 +13,20 @@ const getRandomWord = (min, max) => {
 let number = 0;
 let wordNumber = getRandomWord(0, hangmanWords.length);
 const description = hangmanWords[wordNumber].description;
-let guessWord = hangmanWords[wordNumber].word.toUpperCase().split("");
+let correctWord = hangmanWords[wordNumber].word;
+let guessWord = correctWord.toUpperCase().split("");
 console.log(guessWord);
 
 window.onload = () => {
   console.log(hangmanWords[wordNumber].word);
+  initialState();
   wordRender("_");
+};
+
+// Function to render initial page
+
+const initialState = () => {
+  console.log("Voila!");
 };
 
 // Creating main HTML structure
@@ -173,7 +181,54 @@ const checkLetter = (event) => {
   } else {
     number += 1;
     progress.textContent = `Incorrect guess: ${number}/6`;
+    gameOver(number);
   }
+};
+
+// Rendering a Gallows
+
+// Create Modal Window
+
+const createModalWindow = (result, word) => {
+  const modal = document.createElement("div");
+  modal.classList.add("modal");
+
+  const modalContent = document.createElement("div");
+  modalContent.classList.add("modal-content");
+
+  const text = document.createElement("h2");
+  text.textContent = `You are the ${result}!`;
+
+  const correctWord = document.createElement("h3");
+  correctWord.textContent = `The correct answer is "${word}".`;
+
+  const modalButton = document.createElement("button");
+  modalButton.classList.add("modal__button");
+  modalButton.textContent = `Play again`;
+  modalButton.addEventListener("click", () => {
+    console.log("modal button click!");
+  });
+
+  document.body.append(modal);
+  modal.append(modalContent);
+  modalContent.append(text, correctWord, modalButton);
+};
+
+// Check if the Game is over
+
+const gameOver = (number) => {
+  if (number < 6) {
+    return;
+  } else {
+    console.log("Looser");
+    createModalWindow("Looser", correctWord);
+  }
+};
+
+// Check if you win
+
+const winner = () => {
+  createModalWindow("Winer", correctWord);
 };
 
 keyboardButtons.forEach((button) => {

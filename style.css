@@ -51,9 +51,22 @@ body {
 h1 {
   font-size: 5rem;
   line-height: 10rem;
-  color: #1f1f1f;
   font-weight: bold;
   margin: 4rem 0;
+}
+
+h2 {
+  font-size: 4rem;
+  line-height: 8rem;
+  font-weight: bold;
+  margin: 3rem 0;
+}
+
+h3 {
+  font-size: 3.5rem;
+  line-height: 7rem;
+  font-weight: bold;
+  margin: 3rem 0;
 }
 
 p {
@@ -157,4 +170,32 @@ button:active {
 
 .lighter {
   background-color: #878787;
+}
+
+.modal {
+  /* display: none; */
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.modal-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(232, 232, 232, 0.9);
+  margin: 10% auto;
+  padding: 40px;
+  border: 1px solid #888;
+  width: 40%;
+}
+
+.modal__button {
+  width: 25rem;
+  height: 8rem;
+  margin: 0.5rem;
 }
