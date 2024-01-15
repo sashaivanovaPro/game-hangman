@@ -112,7 +112,6 @@ const wordRender = (arg) => {
     const cell = document.createElement("div");
     cell.classList.add("word__cell");
     cell.textContent = arg;
-    // cell.textContent = `${symbol.toUpperCase()}`;
     word.append(cell);
   });
 };
@@ -161,7 +160,7 @@ const lighter = (button) => {
 const checkLetter = (event) => {
   const buttonText = event.target.textContent;
   console.log(buttonText);
-  console.log(guessWord.includes(buttonText));
+  let check = guessWord.includes(buttonText);
   // return guessWord.includes(buttonText);
   const indexes = [];
   for (let i = 0; i < guessWord.length; i++) {
@@ -169,9 +168,12 @@ const checkLetter = (event) => {
       indexes.push(i);
     }
   }
-  console.log(indexes);
-
-  letterRerender(buttonText, indexes);
+  if (check) {
+    letterRerender(buttonText, indexes);
+  } else {
+    number += 1;
+    progress.textContent = `Incorrect guess: ${number}/6`;
+  }
 };
 
 keyboardButtons.forEach((button) => {
