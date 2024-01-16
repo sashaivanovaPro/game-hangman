@@ -213,7 +213,7 @@ const checkLetter = (event) => {
   }
   if (check) {
     length += 1;
-    console.log(length);
+    // console.log(length);
     letterRerender(buttonText, indexes);
     winner(length);
   } else {
