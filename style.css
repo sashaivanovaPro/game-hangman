@@ -172,6 +172,7 @@ button:active {
 
 .lighter {
   background-color: #878787;
+  pointer-events: none;
 }
 
 .modal {
@@ -185,6 +186,9 @@ button:active {
 
 .modal-content {
   display: flex;
+  top: 50%;
+  left: 50%;
+  /* transform: translate(-50%, -50%); */
   flex-direction: column;
   align-items: center;
   justify-content: center;
