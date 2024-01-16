@@ -214,8 +214,8 @@ const checkLetter = (event) => {
   }
   if (check) {
     length += indexes.length;
-    console.log(indexes);
-    console.log(length);
+    // console.log(indexes);
+    // console.log(length);
     letterRerender(buttonText, indexes);
     winner(length);
   } else {
