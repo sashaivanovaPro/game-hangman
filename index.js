@@ -12,22 +12,46 @@ const getRandomWord = (min, max) => {
 
 let number = 0; // quantity of not guessed letters
 let length = 0; //quantity of correctly guessed letters
-let wordNumber = getRandomWord(0, hangmanWords.length);
-const description = hangmanWords[wordNumber].description;
-let correctWord = hangmanWords[wordNumber].word;
-let guessWord = correctWord.toUpperCase().split("");
-console.log(guessWord);
+let wordNumber = null;
+let description = null;
+let correctWord = null;
+let guessWord = null;
+
+const body = document.querySelector("body");
+// console.log(body);
+// console.log(guessWord);
 
 window.onload = () => {
-  console.log(correctWord);
+  // console.log(correctWord);
   initialState();
-  wordRender("_");
+  // wordRender("_");
 };
+
+//Function to rerender Word
+
+// const renderWord = () => {};
 
 // Function to render initial page
 
 const initialState = () => {
-  console.log("Voila!");
+  let remove = document.querySelector(".modal");
+  if (remove) {
+    body.removeChild(remove);
+  }
+  wordNumber = getRandomWord(0, hangmanWords.length);
+  description = hangmanWords[wordNumber].description;
+  correctWord = hangmanWords[wordNumber].word;
+  guessWord = correctWord.toUpperCase().split("");
+  console.log(correctWord);
+  while (word.firstChild) {
+    word.removeChild(word.firstChild);
+  }
+  number = 0;
+  length = 0;
+  progress.textContent = `Incorrect guess: ${number}/6`;
+  delighter();
+  noHangman();
+  wordRender("_");
 };
 
 // Creating main HTML structure
@@ -59,7 +83,7 @@ const hangman = document.createElement("div");
 hangman.classList.add("hangman");
 
 const manHead = document.createElement("img");
-manHead.classList.add("head-png");
+manHead.classList.add("head-png", "hangman__part");
 manHead.src = "./images/head.png";
 manHead.classList.add("invisible");
 
@@ -67,17 +91,17 @@ const middlePart = document.createElement("div");
 middlePart.classList.add("middle-part");
 
 const manBody = document.createElement("img");
-manBody.classList.add("body-png");
+manBody.classList.add("body-png", "hangman__part");
 manBody.src = "./images/body.png";
 manBody.classList.add("invisible");
 
 const leftHand = document.createElement("img");
-leftHand.classList.add("left-hand-png");
+leftHand.classList.add("left-hand-png", "hangman__part");
 leftHand.src = "./images/hand-one.png";
 leftHand.classList.add("invisible");
 
 const rightHand = document.createElement("img");
-rightHand.classList.add("right-hand-png");
+rightHand.classList.add("right-hand-png", "hangman__part");
 rightHand.src = "./images/hand-two.png";
 rightHand.classList.add("invisible");
 
@@ -85,12 +109,12 @@ const legs = document.createElement("div");
 legs.classList.add("legs");
 
 const leftLeg = document.createElement("img");
-leftLeg.classList.add("left-leg-png");
+leftLeg.classList.add("left-leg-png", "hangman__part");
 leftLeg.src = "./images/leg-one.png";
 leftLeg.classList.add("invisible");
 
 const rightLeg = document.createElement("img");
-rightLeg.classList.add("right-leg-png");
+rightLeg.classList.add("right-leg-png", "hangman__part");
 rightLeg.src = "./images/leg-two.png";
 rightLeg.classList.add("invisible");
 
@@ -150,6 +174,25 @@ const lighter = (button) => {
   button.classList.add("lighter");
 };
 
+// Create initial color of clicked button
+
+const delighter = () => {
+  const buttons = document.querySelectorAll(".keyboard__button");
+  buttons.forEach((button) => {
+    button.classList.remove("lighter");
+  });
+};
+
+// Make hangman invisible
+
+const noHangman = () => {
+  const bodyParts = document.querySelectorAll(".hangman__part");
+  bodyParts.forEach((part) => {
+    part.classList.remove("visible");
+    part.classList.add("invisible");
+  });
+};
+
 // Check letter in a word
 
 const checkLetter = (event) => {
@@ -158,7 +201,7 @@ const checkLetter = (event) => {
     return;
   }
   lighter(event.target);
-  console.log(buttonText);
+  // console.log(buttonText);
   let check = guessWord.includes(buttonText);
 
   // return guessWord.includes(buttonText);
@@ -206,6 +249,7 @@ const renderHangman = (number) => {
 const createModalWindow = (result, word) => {
   const modal = document.createElement("div");
   modal.classList.add("modal");
+  // modal.classList.add("modal");
 
   const modalContent = document.createElement("div");
   modalContent.classList.add("modal-content");
@@ -219,8 +263,10 @@ const createModalWindow = (result, word) => {
   const modalButton = document.createElement("button");
   modalButton.classList.add("modal__button");
   modalButton.textContent = `Play again`;
+  // When we click a modal button
+
   modalButton.addEventListener("click", () => {
-    console.log("modal button click!");
+    initialState();
   });
 
   document.body.append(modal);
@@ -249,14 +295,6 @@ const winner = (length) => {
     createModalWindow("Winner", correctWord);
   }
 };
-
-// When we click a button
-
-// keyboardButtons.forEach((button) => {
-//   button.addEventListener("click", () => {
-
-//   });
-// });
 
 // Event on Click that start letter search
 
