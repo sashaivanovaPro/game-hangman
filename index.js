@@ -13,7 +13,7 @@ const getRandomWord = (min, max) => {
 let number = 0; // quantity of not guessed letters
 let length = 0; //quantity of correctly guessed letters
 let wordNumber = null;
-let description = null;
+let desc = null;
 let correctWord = null;
 let guessWord = null;
 
@@ -39,7 +39,8 @@ const initialState = () => {
     body.removeChild(remove);
   }
   wordNumber = getRandomWord(0, hangmanWords.length);
-  description = hangmanWords[wordNumber].description;
+  desc = hangmanWords[wordNumber].description;
+  hint.textContent = `Hint: ${desc}`;
   correctWord = hangmanWords[wordNumber].word;
   guessWord = correctWord.toUpperCase().split("");
   console.log(correctWord);
@@ -133,7 +134,7 @@ word.classList.add("word");
 
 const hint = document.createElement("p");
 hint.classList.add("hint");
-hint.textContent = `Hint: ${description}`;
+// hint.textContent = `Hint: ${desc}`;
 
 const progress = document.createElement("p");
 progress.classList.add("progress");
