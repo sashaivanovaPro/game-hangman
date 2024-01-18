@@ -197,11 +197,17 @@ const noHangman = () => {
 // Check letter in a word
 
 const checkLetter = (event) => {
-  const buttonText = event.target.textContent;
-  if (event.target.classList.contains("lighter")) {
-    return;
+  let buttonText = null;
+  // console.log(event);
+  if (event.key) {
+    buttonText = event.key.toUpperCase();
+  } else {
+    buttonText = event.target.textContent;
+    if (event.target.classList.contains("lighter")) {
+      return;
+    }
+    lighter(event.target);
   }
-  lighter(event.target);
   // console.log(buttonText);
   let check = guessWord.includes(buttonText);
 
@@ -298,11 +304,21 @@ const winner = (length) => {
   }
 };
 
-// Event on Click that start letter search
+// Event on Click that starts letter search
 
-keyboardButtons.forEach((button) => {
-  button.addEventListener("click", checkLetter);
-});
+// keyboardButtons.forEach((button) => {
+//   button.addEventListener("click", checkLetter);
+// });
+
+// Keyboard event
+
+document.addEventListener("keydown", checkLetter);
+// console.log(event.key);
+// const isLetter = /^[a-zA-Z]$/.test(event.key);
+
+// if (isLetter) {
+//   console.log(`Нажата буквенная клавиша: ${event.key}`);
+// }
 
 document.body.append(bodyWrapper);
 bodyWrapper.append(gallows, game);
