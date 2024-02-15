@@ -1,7 +1,7 @@
-import { hangmanWords } from "./modules/hangman.js";
-import { keyboardArr } from "./modules/keyboard.js";
+import { hangmanWords } from "./modules/hangman.js"; // Words collection to guess
+import { keyboardArr } from "./modules/keyboard.js"; // Letters collection
 
-// Choose a guess word randomly from 0 to Words Array lenght - 1
+// Function that choose a guess word randomly from 0 to Words collection lenght - 1
 
 const getRandomWord = (min, max) => {
   min = Math.ceil(min);
@@ -17,128 +17,42 @@ let desc = null;
 let correctWord = null;
 let guessWord = null;
 
-const body = document.querySelector("body");
-// console.log(body);
-// console.log(guessWord);
-
 window.onload = () => {
-  // console.log(correctWord);
   initialState();
-  // wordRender("_");
 };
 
-//Function to rerender Word
-
-// const renderWord = () => {};
-
-// Function to render initial page
+// Function to render initial page with underlining instead of letters of randomly selected guess word
 
 const initialState = () => {
   let remove = document.querySelector(".modal");
   if (remove) {
-    body.removeChild(remove);
+    body.removeChild(remove); // Remove modal window after previous game
   }
-  wordNumber = getRandomWord(0, hangmanWords.length);
-  desc = hangmanWords[wordNumber].description;
+
+  wordNumber = getRandomWord(0, hangmanWords.length); // Choose a random word number
+
+  correctWord = hangmanWords[wordNumber].word; // Choose a word to guess
+  guessWord = correctWord.toUpperCase().split(""); // Transform word presentation
+  console.log(correctWord); // Output the word to console to check the logic
+
+  desc = hangmanWords[wordNumber].description; // render a hint description
   hint.textContent = `Hint: ${desc}`;
-  correctWord = hangmanWords[wordNumber].word;
-  guessWord = correctWord.toUpperCase().split("");
-  console.log(correctWord);
+
   while (word.firstChild) {
     word.removeChild(word.firstChild);
   }
+
   number = 0;
   length = 0;
-  progress.textContent = `Incorrect guess: ${number}/6`;
-  delighter();
-  noHangman();
-  wordRender("_");
+
+  progress.textContent = `Incorrect guess: ${number}/6`; // render zero state of counter
+
+  delighter(); // Initial color to clicked buttons (virtual keyboard)
+  noHangman(); // Make hangman invisible
+  wordRender("_"); // Initial word render with underlining
 };
 
-// Creating main HTML structure
-
-const bodyWrapper = document.createElement("div");
-bodyWrapper.classList.add("body-wrapper");
-
-// Image section
-
-const gallows = document.createElement("section");
-gallows.classList.add("gallows");
-
-const gallowImgWrapper = document.createElement("div");
-gallowImgWrapper.classList.add("gallow-img__wrapper");
-
-const gallowImage = document.createElement("div");
-gallowImage.classList.add("gallow-image");
-
-const gameName = document.createElement("h1");
-gameName.classList.add("heading");
-gameName.textContent = "HANGMAN GAME";
-
-const gallowPng = document.createElement("img");
-gallowPng.classList.add("gallow-png");
-gallowPng.src = "./images/gallows.png";
-
-// Hangman body parts
-const hangman = document.createElement("div");
-hangman.classList.add("hangman");
-
-const manHead = document.createElement("img");
-manHead.classList.add("head-png", "hangman__part");
-manHead.src = "./images/head.png";
-manHead.classList.add("invisible");
-
-const middlePart = document.createElement("div");
-middlePart.classList.add("middle-part");
-
-const manBody = document.createElement("img");
-manBody.classList.add("body-png", "hangman__part");
-manBody.src = "./images/body.png";
-manBody.classList.add("invisible");
-
-const leftHand = document.createElement("img");
-leftHand.classList.add("left-hand-png", "hangman__part");
-leftHand.src = "./images/hand-one.png";
-leftHand.classList.add("invisible");
-
-const rightHand = document.createElement("img");
-rightHand.classList.add("right-hand-png", "hangman__part");
-rightHand.src = "./images/hand-two.png";
-rightHand.classList.add("invisible");
-
-const legs = document.createElement("div");
-legs.classList.add("legs");
-
-const leftLeg = document.createElement("img");
-leftLeg.classList.add("left-leg-png", "hangman__part");
-leftLeg.src = "./images/leg-one.png";
-leftLeg.classList.add("invisible");
-
-const rightLeg = document.createElement("img");
-rightLeg.classList.add("right-leg-png", "hangman__part");
-rightLeg.src = "./images/leg-two.png";
-rightLeg.classList.add("invisible");
-
-// Game section
-
-const game = document.createElement("section");
-game.classList.add("game");
-
-const gameWrapper = document.createElement("div");
-gameWrapper.classList.add("game-wrapper");
-
-//Create a guess word section
-
-const word = document.createElement("div");
-word.classList.add("word");
-
-const hint = document.createElement("p");
-hint.classList.add("hint");
-// hint.textContent = `Hint: ${desc}`;
-
-const progress = document.createElement("p");
-progress.classList.add("progress");
-progress.textContent = `Incorrect guess: ${number}/6`;
+// Function to render guess word
 
 const wordRender = (arg) => {
   guessWord.forEach((symbol) => {
@@ -148,6 +62,8 @@ const wordRender = (arg) => {
     word.append(cell);
   });
 };
+
+// Function to remove underlines with guessed letter
 
 const letterRerender = (clickedLetter, arr) => {
   for (let i = 0; i < arr.length; i++) {
@@ -175,7 +91,7 @@ const lighter = (button) => {
   button.classList.add("lighter");
 };
 
-// Create initial color of clicked button
+// Function to return initial color to clicked buttons on virtual keyboard
 
 const delighter = () => {
   const buttons = document.querySelectorAll(".keyboard__button");
@@ -184,7 +100,7 @@ const delighter = () => {
   });
 };
 
-// Make hangman invisible
+// Function to make hangman invisible
 
 const noHangman = () => {
   const bodyParts = document.querySelectorAll(".hangman__part");
@@ -198,20 +114,19 @@ const noHangman = () => {
 
 const checkLetter = (event) => {
   let buttonText = null;
-  // console.log(event);
+  console.log(event);
   if (event.key) {
     buttonText = event.key.toUpperCase();
   } else {
     buttonText = event.target.textContent;
-    if (event.target.classList.contains("lighter")) {
-      return;
-    }
-    lighter(event.target);
   }
-  // console.log(buttonText);
+  if (event.target.classList.contains("lighter")) {
+    return;
+  }
+  lighter(event.target);
+
   let check = guessWord.includes(buttonText);
 
-  // return guessWord.includes(buttonText);
   const indexes = [];
   for (let i = 0; i < guessWord.length; i++) {
     if (guessWord[i] === buttonText) {
@@ -220,8 +135,6 @@ const checkLetter = (event) => {
   }
   if (check) {
     length += indexes.length;
-    // console.log(indexes);
-    // console.log(length);
     letterRerender(buttonText, indexes);
     winner(length);
   } else {
@@ -232,7 +145,7 @@ const checkLetter = (event) => {
   }
 };
 
-// Rendering a Hangman
+// Rendering a parts of a Hangman in correct order
 
 const renderHangman = (number) => {
   if (!number) {
@@ -252,12 +165,11 @@ const renderHangman = (number) => {
   }
 };
 
-// Create Modal Window
+// Function to create a Modal Window in the end of the game (result: winner or loser)
 
 const createModalWindow = (result, word) => {
   const modal = document.createElement("div");
   modal.classList.add("modal");
-  // modal.classList.add("modal");
 
   const modalContent = document.createElement("div");
   modalContent.classList.add("modal-content");
@@ -271,7 +183,8 @@ const createModalWindow = (result, word) => {
   const modalButton = document.createElement("button");
   modalButton.classList.add("modal__button");
   modalButton.textContent = `Play again`;
-  // When we click a modal button
+
+  // When we click a modal button game starts one more time
 
   modalButton.addEventListener("click", () => {
     initialState();
@@ -282,43 +195,40 @@ const createModalWindow = (result, word) => {
   modalContent.append(text, correctWord, modalButton);
 };
 
-// Check if the Game is over
+// Function that checks if you’ve lost
 
 const gameOver = (number) => {
   if (number < 6) {
     return;
   } else {
-    // console.log("Looser");
-    createModalWindow("Looser", correctWord);
+    createModalWindow("Loser", correctWord);
   }
 };
 
-// Check if you win
+// Function that checks if you win
 
 const winner = (length) => {
   if (correctWord.length !== length) {
     return;
   } else {
-    // console.log("Looser");
     createModalWindow("Winner", correctWord);
   }
 };
 
 // Event on Click that starts letter search
 
-// keyboardButtons.forEach((button) => {
-//   button.addEventListener("click", checkLetter);
-// });
+keyboardButtons.forEach((button) => {
+  button.addEventListener("click", checkLetter);
+});
 
 // Keyboard event
 
-document.addEventListener("keydown", checkLetter);
-// console.log(event.key);
-// const isLetter = /^[a-zA-Z]$/.test(event.key);
-
-// if (isLetter) {
-//   console.log(`Нажата буквенная клавиша: ${event.key}`);
-// }
+document.addEventListener("keydown", (event) => {
+  const isLetter = /^[a-zA-Z]$/.test(event.key);
+  if (isLetter) {
+    checkLetter(event);
+  }
+});
 
 document.body.append(bodyWrapper);
 bodyWrapper.append(gallows, game);
