@@ -215,20 +215,20 @@ const winner = (length) => {
   }
 };
 
-// Event on Click that starts letter search
+// Event on Click for virtual keyboard that starts letter search in guessed word
 
 keyboardButtons.forEach((button) => {
   button.addEventListener("click", checkLetter);
 });
 
-// Keyboard event
+// // Keyboard event
 
-document.addEventListener("keydown", (event) => {
-  const isLetter = /^[a-zA-Z]$/.test(event.key);
-  if (isLetter) {
-    checkLetter(event);
-  }
-});
+// document.addEventListener("keydown", (event) => {
+//   const isLetter = /^[a-zA-Z]$/.test(event.key);
+//   if (isLetter) {
+//     checkLetter(event);
+//   }
+// });
 
 document.body.append(bodyWrapper);
 bodyWrapper.append(gallows, game);

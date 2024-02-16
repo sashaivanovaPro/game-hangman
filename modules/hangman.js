@@ -7,8 +7,9 @@ export const hangmanWords = [
   },
   {
     number: 2,
-    word: "puzzling",
-    description: "something that is difficult to explain or understand",
+    word: "slider",
+    description:
+      "carousel generally consisting of images or cards that rotate, highlighting different photos, links, and content",
   },
   {
     number: 3,
@@ -56,5 +57,28 @@ export const hangmanWords = [
     word: "linebreaks",
     description:
       "the characters or tags that you use to forcing subsequent elements to appear on a new line",
+  },
+  {
+    number: 11,
+    word: "application",
+    description:
+      "these are programs designed to perform functions. Might refer to desktop, mobile or even web",
+  },
+  {
+    number: 12,
+    word: "cookies",
+    description:
+      "the data sent by an Internet server to a browser, we are not talking about the source of all that is good, chocolatey, and sugary in the world",
+  },
+  {
+    number: 13,
+    word: "deployment",
+    description:
+      "combination of all of the activities that make a software system available for use",
+  },
+  {
+    number: 14,
+    word: "favicon",
+    description: "it’s the icon that appears in your website’s browser tab",
   },
 ];
