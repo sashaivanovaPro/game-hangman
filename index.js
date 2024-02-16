@@ -110,34 +110,39 @@ const noHangman = () => {
   });
 };
 
-// Check letter in a word
+// Function that checks clicked letter in a word (from virtual board)
 
 const checkLetter = (event) => {
-  let buttonText = null;
-  console.log(event);
+  let buttonTextContent = null; // initially letter is not defined
+
   if (event.key) {
-    buttonText = event.key.toUpperCase();
+    buttonTextContent = event.key.toUpperCase();
   } else {
-    buttonText = event.target.textContent;
+    buttonTextContent = event.target.textContent;
   }
   if (event.target.classList.contains("lighter")) {
-    return;
+    return; // do nothing if letter is allready clicked
   }
-  lighter(event.target);
+  lighter(event.target); // makes clicked virtual keyboard letter grey
 
-  let check = guessWord.includes(buttonText);
+  let check = guessWord.includes(buttonTextContent); // checking presence of clicked letter in the word - true or false
 
-  const indexes = [];
+  const indexes = []; // indexes of letter in the guess  word
   for (let i = 0; i < guessWord.length; i++) {
-    if (guessWord[i] === buttonText) {
+    if (guessWord[i] === buttonTextContent) {
       indexes.push(i);
     }
   }
+
   if (check) {
+    // if letter is present - length parameter plus quantity of letters in the word, instead of
+    // underlines appears letter and works a function to check if you are the winner
     length += indexes.length;
-    letterRerender(buttonText, indexes);
+    letterRerender(buttonTextContent, indexes);
     winner(length);
   } else {
+    // if letter is not present - number parameter adds one point, number of
+    // uncorrect guesses adds one point and rerender it and works a function to check if you are the loser
     number += 1;
     progress.textContent = `Incorrect guess: ${number}/6`;
     renderHangman(number);
