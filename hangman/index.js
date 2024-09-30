@@ -3,22 +3,18 @@ import { keyboardArr } from "./modules/keyboard.js"; // Letters collection
 
 // Function that choose a guess word randomly from 0 to Words collection lenght - 1
 
-const getRandomWord = (min, max) => {
-  min = Math.ceil(min);
-  max = Math.floor(max);
-  let wordNumber = Math.floor(Math.random() * (max - min) + min);
-  return wordNumber;
-};
-
-let number = 0; // quantity of not guessed letters
-let length = 0; //quantity of correctly guessed letters
-let wordNumber = null;
-let desc = null;
+let successCount = 0; // quantity of not guessed letters
+let failureCount = 0; //quantity of correctly guessed letters
+let randomWordNumber = null;
+let description = null;
 let correctWord = null;
 let guessWord = null;
 
-window.onload = () => {
-  initialState();
+const getRandomWord = (min, max) => {
+  min = Math.ceil(min);
+  max = Math.floor(max);
+  let randomIndex = Math.floor(Math.random() * (max - min) + min);
+  return randomIndex;
 };
 
 // Function to render initial page with underlining instead of letters of randomly selected guess word
@@ -29,23 +25,23 @@ const initialState = () => {
     body.removeChild(remove); // Remove modal window after previous game
   }
 
-  wordNumber = getRandomWord(0, hangmanWords.length); // Choose a random word number
+  randomWordNumber = getRandomWord(0, hangmanWords.length); // Choose a random word number
 
-  correctWord = hangmanWords[wordNumber].word; // Choose a word to guess
+  correctWord = hangmanWords[randomWordNumber].word; // Choose a word to guess
   guessWord = correctWord.toUpperCase().split(""); // Transform word presentation
   console.log(correctWord); // Output the word to console to check the logic
 
-  desc = hangmanWords[wordNumber].description; // render a hint description
-  hint.textContent = `Hint: ${desc}`;
+  description = hangmanWords[randomWordNumber].description; // render a hint description
+  hint.textContent = `Hint: ${description}`;
 
   while (word.firstChild) {
     word.removeChild(word.firstChild);
   }
 
-  number = 0;
-  length = 0;
+  successCount = 0;
+  failureCount = 0;
 
-  progress.textContent = `Incorrect guess: ${number}/6`; // render zero state of counter
+  progress.textContent = `Incorrect guess: ${successCount}/6`; // render zero state of counter
 
   delighter(); // Initial color to clicked buttons (virtual keyboard)
   noHangman(); // Make hangman invisible
@@ -137,36 +133,45 @@ const checkLetter = (event) => {
   if (check) {
     // if letter is present - length parameter plus quantity of letters in the word, instead of
     // underlines appears letter and works a function to check if you are the winner
-    length += indexes.length;
+    failureCount += indexes.failureCount;
     letterRerender(buttonTextContent, indexes);
     winner(length);
   } else {
     // if letter is not present - number parameter adds one point, number of
     // uncorrect guesses adds one point and rerender it and works a function to check if you are the loser
-    number += 1;
-    progress.textContent = `Incorrect guess: ${number}/6`;
-    renderHangman(number);
-    gameOver(number);
+    successCount += 1;
+    progress.textContent = `Incorrect guess: ${successCount}/6`;
+    renderHangman(successCount);
+    gameOver(successCount);
   }
 };
 
 // Rendering a parts of a Hangman in correct order
 
 const renderHangman = (number) => {
-  if (!number) {
-    return;
-  } else if (number === 1) {
-    manHead.classList.add("visible");
-  } else if (number === 2) {
-    manBody.classList.add("visible");
-  } else if (number === 3) {
-    rightHand.classList.add("visible");
-  } else if (number === 4) {
-    leftHand.classList.add("visible");
-  } else if (number === 5) {
-    rightLeg.classList.add("visible");
-  } else if (number === 6) {
-    leftLeg.classList.add("visible");
+  if (!number) return;
+
+  switch (number) {
+    case 1:
+      manHead.classList.add("visible");
+      break;
+    case 2:
+      manBody.classList.add("visible");
+      break;
+    case 3:
+      rightHand.classList.add("visible");
+      break;
+    case 4:
+      leftHand.classList.add("visible");
+      break;
+    case 5:
+      rightLeg.classList.add("visible");
+      break;
+    case 6:
+      leftLeg.classList.add("visible");
+      break;
+    default:
+      break;
   }
 };
 
@@ -246,3 +251,7 @@ middlePart.append(leftHand, manBody, rightHand);
 legs.append(leftLeg, rightLeg);
 game.append(gameWrapper);
 gameWrapper.append(word, hint, progress, keyboard);
+
+window.onload = () => {
+  initialState();
+};
