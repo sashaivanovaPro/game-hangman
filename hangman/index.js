@@ -134,12 +134,14 @@ const checkLetter = (event) => {
     // if letter is present - length parameter plus quantity of letters in the word, instead of
     // underlines appears letter and works a function to check if you are the winner
     successCount += indexes.length;
+    successStepSound.play();
     letterRerender(buttonTextContent, indexes);
     winner(successCount);
   } else {
     // if letter is not present - number parameter adds one point, number of
     // uncorrect guesses adds one point and rerender it and works a function to check if you are the loser
     failureCount += 1;
+    failStepSound.play();
     progress.textContent = `Incorrect guess: ${failureCount}/6`;
     renderHangman(failureCount);
     gameOver(failureCount);
@@ -198,6 +200,7 @@ const createModalWindow = (result, word) => {
 
   modalButton.addEventListener("click", () => {
     initialState();
+    playAgainSound.play();
   });
 
   document.body.append(modal);
@@ -212,6 +215,7 @@ const gameOver = (number) => {
     return;
   } else {
     createModalWindow("Loser", correctWord);
+    loseGameSound.play();
   }
 };
 
@@ -222,6 +226,7 @@ const winner = (length) => {
     return;
   } else {
     createModalWindow("Winner", correctWord);
+    winGameSound.play();
   }
 };
 
@@ -239,6 +244,13 @@ keyboardButtons.forEach((button) => {
 //     checkLetter(event);
 //   }
 // });
+
+// Audio effects for different events
+const winGameSound = new Audio("sounds/win-game.wav");
+const loseGameSound = new Audio("sounds/lose-game.wav");
+const successStepSound = new Audio("sounds/success-sound.wav");
+const failStepSound = new Audio("sounds/fail-sound.wav");
+const playAgainSound = new Audio("sounds/play-again.wav");
 
 document.body.append(bodyWrapper);
 bodyWrapper.append(gallows, game);
